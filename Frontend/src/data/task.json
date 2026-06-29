@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Project 1:- UserCard",
+    "description": "Build and review the user card view with clean profile details and actions.",
+    "priority": "High",
+    "status": "In Progress",
+    "dueDate": "2026-03-11"
+  },
+  {
+    "id": 2,
+    "title": "Project 2:- Contact Form",
+    "description": "Build and review the contact form with validation and submission handling.",
+    "priority": "High",
+    "status": "In Progress",
+    "dueDate": "2026-03-11"
+  },
+  {
+    "id": 3,
+    "title": "Project 3:- register & login",
+    "description": "Build and review the register and login functionality with validation and authentication.",
+    "priority": "High",
+    "status": "In Progress",
+    "dueDate": "2026-03-11"
+  },
+  {
+    "id": 4,
+    "title": "Project 4:- Chat app",
+    "description": "Build and review the chat app with real-time messaging and user presence.",
+    "priority": "High",
+    "status": "In Progress",
+    "dueDate": "2026-03-11"
+  },
+  {
+    "id": 5,
+    "title": "Project 5:- game app",
+    "description": "daily reward and level systemS",
+    "priority": "High",
+    "status": "In Progress",
+    "dueDate": "2026-03-11"
+  }
+]

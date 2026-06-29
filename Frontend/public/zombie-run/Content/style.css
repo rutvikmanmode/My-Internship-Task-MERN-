@@ -1,0 +1,201 @@
+﻿@font-face {
+	font-family: 'SMB';
+	src: local('Super Mario Bros.'),
+		 url('fonts/Super Mario Bros.ttf') format('truetype');
+	font-style: normal;
+ }
+ 
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'SMB', sans-serif;
+  background: radial-gradient(circle at top, #402f49 0%, #160d1a 48%, #050307 100%);
+}
+ 
+#game {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+.game-over-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 5, 16, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.game-over-overlay.hidden {
+  display: none;
+}
+
+.game-over-card {
+  width: min(92vw, 480px);
+  padding: 28px 24px;
+  border: 2px solid rgba(255, 214, 93, 0.55);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(51, 20, 28, 0.96), rgba(19, 11, 29, 0.98));
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+  color: #fff6d0;
+  text-align: center;
+}
+
+.game-over-kicker {
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  color: #ffdf63;
+  text-transform: uppercase;
+}
+
+.game-over-card h1 {
+  margin: 0;
+  font-size: 2.2rem;
+}
+
+.game-over-summary {
+  margin: 16px 0 22px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.game-over-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.game-over-stat {
+  padding: 14px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.game-over-stat span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+  color: rgba(255, 246, 208, 0.74);
+}
+
+.game-over-stat strong {
+  display: block;
+  font-size: 1.5rem;
+  color: #ffdf63;
+}
+
+.game-over-button {
+  border: none;
+  border-radius: 999px;
+  padding: 14px 22px;
+  min-width: 180px;
+  font-family: 'SMB', sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: #210d18;
+  background: linear-gradient(135deg, #ffdf63, #ff9658);
+  box-shadow: 0 16px 32px rgba(255, 159, 88, 0.26);
+}
+
+.game-over-button:hover {
+  transform: translateY(-1px);
+}
+
+.game-over-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .game-over-card {
+    padding: 24px 18px;
+  }
+
+  .game-over-stats {
+    grid-template-columns: 1fr;
+  }
+}
+ 
+ #world { 
+   margin: 0;
+   padding: 0;
+   height: 100%;
+   width: 100%;
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   z-index: 0;
+ }
+ 
+ .gauge {
+   margin: 0;
+   padding: 0;
+   height: 50px;
+   width: 70px;
+   text-align: right;
+   font-size: 2em;
+   font-weight: bold;
+   position: absolute;
+   top: 17px;
+   right: 52px;
+   z-index: 1000;
+   font-family: 'SMB';
+ }
+ 
+ .gaugeSprite {
+   margin: 0;
+   padding: 0;
+   z-index: 1000;
+   position: absolute;
+ }
+ 
+ #coinNumber {
+   left: 0;
+ }
+ 
+ #liveNumber {
+   right: 52px;
+ }
+ 
+ #coin {
+   height: 32px;
+   width: 32px;
+   background-image: url(mario-objects.png);
+   background-position: 0 0;
+   top: 15px;
+   left: 70px;
+ }
+ 
+ #live {
+   height: 40px;
+   width: 40px;
+   background-image: url(mario-sprites.png);
+   background-position: 0 -430px;
+   top: 12px;
+   right: 8px;
+ }
+ 
+ .figure {
+   margin: 0;
+   padding: 0;
+   z-index: 99;
+   position: absolute;
+ }
+ 
+ .matter {
+   margin: 0;
+   padding: 0;
+   z-index: 95;
+   position: absolute;
+   width: 32px;
+   height: 32px;
+ }
+ 

@@ -1,0 +1,895 @@
+.gamedashboard-shell {
+  position: relative;
+  min-height: 100vh;
+  padding: 8.75rem 1.25rem 3rem;
+  overflow: hidden;
+}
+
+.gamedashboard-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(255, 223, 99, 0.18), transparent 24%),
+    radial-gradient(circle at 88% 16%, rgba(207, 125, 59, 0.18), transparent 20%),
+    radial-gradient(circle at 82% 78%, rgba(174, 0, 33, 0.24), transparent 24%);
+  pointer-events: none;
+}
+
+.gamedashboard-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  min-width: 0;
+}
+
+.gamedashboard-rewardmodal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background:
+    radial-gradient(circle at top, rgba(255, 223, 99, 0.08), transparent 24%),
+    rgba(14, 4, 8, 0.78);
+  backdrop-filter: blur(16px);
+}
+
+.gamedashboard-rewardmodal {
+  position: relative;
+  width: min(920px, 100%);
+  border: 1px solid rgba(255, 223, 99, 0.18);
+  border-radius: 1.75rem;
+  padding: 1.1rem;
+  background:
+    linear-gradient(180deg, rgba(81, 18, 51, 0.96) 0%, rgba(26, 8, 14, 0.98) 100%),
+    radial-gradient(circle at top right, rgba(255, 223, 99, 0.08), transparent 28%);
+  box-shadow:
+    0 36px 80px rgba(8, 2, 5, 0.52),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.gamedashboard-rewardmodal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 223, 99, 0.18);
+  background: rgba(61, 20, 38, 0.82);
+  color: var(--game-accent);
+}
+
+.gamedashboard-rewardmodal__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(250px, 0.8fr);
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.gamedashboard-rewardmodal__visual {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  border-radius: 1.65rem;
+}
+
+.gamedashboard-rewardmodal__copy {
+  position: relative;
+  min-width: 0;
+  padding: 0.45rem 0.35rem 0.35rem;
+}
+
+.gamedashboard-rewardmodal__visual {
+  border: 1px solid rgba(255, 223, 99, 0.1);
+  padding: 1rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+.gamedashboard-rewardmodal__copy h2 {
+  margin: 0;
+  max-width: 10ch;
+  font-size: clamp(1.8rem, 3.4vw, 3rem);
+  line-height: 0.96;
+  color: var(--game-text);
+}
+
+.gamedashboard-rewardmodal__copy p {
+  margin-top: 0.65rem;
+  max-width: 30rem;
+  color: var(--game-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.gamedashboard-rewardmodal__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.9rem;
+}
+
+.gamedashboard-rewardmodal__stats div,
+.gamedashboard-rewardmodal__wallet,
+.gamedashboard-rewardmodal__milestone {
+  border: 1px solid rgba(255, 223, 99, 0.12);
+  border-radius: 1rem;
+  padding: 0.75rem 0.9rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.gamedashboard-rewardmodal__stats span,
+.gamedashboard-rewardmodal__wallet span,
+.gamedashboard-rewardmodal__milestone span,
+.gamedashboard-rewardcard__day {
+  display: block;
+  color: var(--game-subtle);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+}
+
+.gamedashboard-rewardmodal__stats strong,
+.gamedashboard-rewardmodal__wallet strong,
+.gamedashboard-rewardmodal__milestone strong,
+.gamedashboard-rewardcard strong {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--game-text);
+}
+
+.gamedashboard-rewardmodal__stats strong {
+  font-size: 1.2rem;
+}
+
+.gamedashboard-rewardmodal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.9rem;
+}
+
+.gamedashboard-rewardmodal__claimbtn,
+.gamedashboard-rewardmodal__laterbtn {
+  min-height: 2.8rem;
+  padding: 0.75rem 1.15rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.gamedashboard-rewardmodal__claimbtn {
+  background: linear-gradient(135deg, var(--game-accent), var(--game-secondary));
+  color: var(--game-bg);
+  box-shadow: 0 16px 32px rgba(255, 223, 99, 0.18);
+}
+
+.gamedashboard-rewardmodal__laterbtn {
+  border: 1px solid rgba(255, 223, 99, 0.16);
+  background: rgba(61, 20, 38, 0.68);
+  color: var(--game-text);
+}
+
+.gamedashboard-rewardmodal__claimbtn:hover,
+.gamedashboard-rewardmodal__laterbtn:hover,
+.gamedashboard-rewardmodal__close:hover {
+  transform: translateY(-2px);
+}
+
+.gamedashboard-rewardmodal__claimbtn:disabled,
+.gamedashboard-rewardmodal__laterbtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.gamedashboard-rewardmodal__notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+  border: 1px solid rgba(255, 223, 99, 0.16);
+  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
+  background: rgba(255, 223, 99, 0.08);
+  color: var(--game-text);
+  font-size: 0.75rem;
+}
+
+.gamedashboard-rewardmodal__notice--error {
+  border-color: rgba(255, 120, 120, 0.18);
+  background: rgba(120, 16, 24, 0.28);
+  color: #ffd6d6;
+}
+
+.gamedashboard-rewardmodal__visual {
+  display: grid;
+  align-content: space-between;
+  gap: 0.8rem;
+  background:
+    radial-gradient(circle at 50% 26%, rgba(174, 0, 33, 0.26), transparent 26%),
+    radial-gradient(circle at 50% 20%, rgba(255, 223, 99, 0.16), transparent 38%),
+    linear-gradient(180deg, rgba(61, 20, 38, 0.82) 0%, rgba(22, 6, 12, 0.96) 100%);
+}
+
+.gamedashboard-rewardmodal__coinhalo {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  width: 170px;
+  height: 170px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 223, 99, 0.18) 0%, rgba(174, 0, 33, 0.08) 48%, transparent 72%);
+  transform: translateX(-50%);
+  filter: blur(10px);
+}
+
+.gamedashboard-rewardmodal__coin {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  width: min(150px, 52%);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 26px rgba(255, 223, 99, 0.18));
+}
+
+.gamedashboard-rewardmodal__wallet strong {
+  font-size: clamp(1.45rem, 3vw, 2.2rem);
+}
+
+.gamedashboard-rewardmodal__milestone strong {
+  font-size: 1rem;
+}
+
+.gamedashboard-rewardmodal__milestone p {
+  margin-top: 0.45rem;
+  color: var(--game-muted);
+  font-size: 0.78rem;
+}
+
+.gamedashboard-rewardmodal__track {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+
+.gamedashboard-rewardcard {
+  display: grid;
+  justify-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  border: 1px solid rgba(255, 223, 99, 0.12);
+  border-radius: 1rem;
+  padding: 0.7rem 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  text-align: center;
+}
+
+.gamedashboard-rewardcard img {
+  width: auto;
+  height: 30px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(255, 223, 99, 0.2));
+}
+
+.gamedashboard-rewardcard strong {
+  margin-top: 0;
+  font-size: 0.98rem;
+}
+
+.gamedashboard-rewardcard small {
+  color: var(--game-muted);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+.gamedashboard-rewardcard--available {
+  border-color: rgba(255, 223, 99, 0.32);
+  background:
+    linear-gradient(180deg, rgba(255, 223, 99, 0.12) 0%, rgba(207, 125, 59, 0.08) 100%);
+  box-shadow: 0 0 28px rgba(255, 223, 99, 0.12);
+}
+
+.gamedashboard-rewardcard--claimed {
+  border-color: rgba(207, 125, 59, 0.2);
+  background:
+    linear-gradient(180deg, rgba(106, 22, 70, 0.42) 0%, rgba(39, 10, 23, 0.44) 100%);
+}
+
+.gamedashboard-rewardcard--locked {
+  opacity: 0.78;
+}
+
+.gamedashboard-hero,
+.gamedashboard-spotlight,
+.gamedashboard-statcard,
+.gamedashboard-panel,
+.gamedashboard-gamecard,
+.gamedashboard-status {
+  border: 1px solid rgba(255, 223, 99, 0.14);
+  background: linear-gradient(180deg, rgba(106, 22, 70, 0.7) 0%, rgba(39, 10, 23, 0.92) 100%);
+  box-shadow: 0 24px 60px rgba(18, 3, 9, 0.28);
+  backdrop-filter: blur(14px);
+}
+
+.gamedashboard-hero {
+  border-radius: 2.1rem;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.1rem;
+  background:
+    linear-gradient(180deg, rgba(106, 22, 70, 0.72) 0%, rgba(39, 10, 23, 0.9) 100%),
+    radial-gradient(circle at top right, rgba(255, 223, 99, 0.12), transparent 34%);
+}
+
+.gamedashboard-hero__copy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.gamedashboard-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 223, 99, 0.08);
+  color: var(--game-accent);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.gamedashboard-kicker--compact {
+  margin-bottom: 0.8rem;
+}
+
+.gamedashboard-hero h1 {
+  max-width: none;
+  margin: 0;
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  line-height: 1;
+  color: var(--game-text);
+}
+
+.gamedashboard-spotlight {
+  display: grid;
+  grid-template-columns: minmax(320px, 430px) minmax(0, 1fr);
+  gap: 1.15rem;
+  padding: 1.2rem;
+  border-radius: 2.1rem;
+  margin-bottom: 1.15rem;
+  background:
+    linear-gradient(180deg, rgba(86, 18, 55, 0.76) 0%, rgba(39, 10, 23, 0.94) 100%),
+    linear-gradient(130deg, rgba(255, 223, 99, 0.06), transparent 34%);
+}
+
+.gamedashboard-spotlight__profile,
+.gamedashboard-spotlight__mission {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.65rem;
+}
+
+.gamedashboard-spotlight__profile {
+  padding: 1.45rem;
+  background:
+    linear-gradient(180deg, rgba(61, 20, 38, 0.58) 0%, rgba(28, 7, 16, 0.86) 100%),
+    radial-gradient(circle at top left, rgba(255, 223, 99, 0.1), transparent 36%);
+  border: 1px solid rgba(255, 223, 99, 0.14);
+}
+
+.gamedashboard-spotlight__mission {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+  padding: 1.65rem;
+  background:
+    linear-gradient(180deg, rgba(87, 20, 58, 0.48) 0%, rgba(29, 8, 17, 0.9) 100%),
+    radial-gradient(circle at top right, rgba(255, 223, 99, 0.08), transparent 34%);
+  border: 1px solid rgba(255, 223, 99, 0.12);
+}
+
+.gamedashboard-spotlight__mission h3 {
+  margin-bottom: 0.85rem;
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
+  line-height: 0.95;
+  color: var(--game-text);
+}
+
+.gamedashboard-spotlight__mission > p {
+  max-width: 38rem;
+  color: var(--game-muted);
+  font-size: 0.96rem;
+}
+
+.gamedashboard-avatar {
+  height: 112px;
+  width: 112px;
+  margin: 0 auto 1.25rem;
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 223, 99, 0.22);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 223, 99, 0.28), transparent 35%),
+    linear-gradient(180deg, rgba(106, 22, 70, 0.98) 0%, rgba(61, 20, 38, 0.98) 100%);
+}
+
+.gamedashboard-avatar__image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.gamedashboard-avatar__fallback {
+  font-size: 2.4rem;
+  color: var(--game-text);
+}
+
+.gamedashboard-spotlight__identity h2 {
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  color: var(--game-text);
+}
+
+.gamedashboard-spotlight__identity p {
+  margin-top: 0.2rem;
+  color: var(--game-muted);
+  word-break: break-word;
+}
+
+.gamedashboard-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.gamedashboard-badges--left {
+  justify-content: flex-start;
+}
+
+.gamedashboard-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 223, 99, 0.08);
+  color: var(--game-accent);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.gamedashboard-about {
+  margin-top: 1.45rem;
+}
+
+.gamedashboard-about h3,
+.gamedashboard-panel h3,
+.gamedashboard-gamecard h3,
+.gamedashboard-performance__header h3 {
+  font-size: 1.15rem;
+  color: var(--game-text);
+}
+
+.gamedashboard-about p,
+.gamedashboard-featured p,
+.gamedashboard-performance__header p,
+.gamedashboard-statcard p,
+.gamedashboard-gamecard p {
+  color: var(--game-muted);
+}
+
+.gamedashboard-about p {
+  margin-top: 0.75rem;
+}
+
+.gamedashboard-featured {
+  margin-top: 1.35rem;
+  border-radius: 1.6rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 223, 99, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 223, 99, 0.07) 0%, rgba(39, 10, 23, 0.4) 100%),
+    radial-gradient(circle at top left, rgba(255, 223, 99, 0.12), transparent 36%);
+}
+
+.gamedashboard-featured__label,
+.gamedashboard-performance__header,
+.gamedashboard-scorecard__title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.gamedashboard-featured__label {
+  color: var(--game-accent);
+}
+
+.gamedashboard-featured strong {
+  display: block;
+  margin-top: 0.85rem;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--game-text);
+}
+
+.gamedashboard-featured p {
+  margin-top: 0.55rem;
+}
+
+.gamedashboard-featured__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.gamedashboard-featured__stats div,
+.gamedashboard-infoRow,
+.gamedashboard-activityRow,
+.gamedashboard-scorecard__grid div {
+  padding: 0.95rem 1rem;
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 223, 99, 0.08);
+}
+
+.gamedashboard-featured__stats span,
+.gamedashboard-performance__header p,
+.gamedashboard-infoRow small,
+.gamedashboard-activityRow span,
+.gamedashboard-scorecard__grid span,
+.gamedashboard-statcard__label {
+  color: var(--game-subtle);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.gamedashboard-featured__stats b {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--game-text);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.gamedashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.15rem;
+}
+
+.gamedashboard-statcard,
+.gamedashboard-panel,
+.gamedashboard-gamecard {
+  border-radius: 1.6rem;
+  padding: 1.35rem;
+}
+
+.gamedashboard-statcard {
+  display: flex;
+  gap: 0.95rem;
+  align-items: center;
+  min-height: 124px;
+}
+
+.gamedashboard-statcard__icon,
+.gamedashboard-infoRow__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(255, 223, 99, 0.08);
+  color: var(--game-accent);
+  flex-shrink: 0;
+}
+
+.gamedashboard-statcard__icon {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.gamedashboard-infoRow__icon {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.gamedashboard-statcard__copy {
+  min-width: 0;
+}
+
+.gamedashboard-featured,
+.gamedashboard-performance,
+.gamedashboard-gamecard,
+.gamedashboard-panel,
+.gamedashboard-statcard,
+.gamedashboard-spotlight__profile,
+.gamedashboard-spotlight__mission {
+  min-width: 0;
+}
+
+.gamedashboard-statcard strong,
+.gamedashboard-infoRow strong,
+.gamedashboard-activityRow strong,
+.gamedashboard-scorecard__grid strong {
+  display: block;
+  color: var(--game-text);
+}
+
+.gamedashboard-statcard strong {
+  margin-top: 0.5rem;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.gamedashboard-statcard p {
+  margin-top: 0.45rem;
+}
+
+.gamedashboard-board {
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  gap: 1.15rem;
+}
+
+.gamedashboard-sidebar,
+.gamedashboard-performance,
+.gamedashboard-games {
+  display: grid;
+  gap: 1rem;
+}
+
+.gamedashboard-performance {
+  padding: 1.15rem;
+  border-radius: 1.75rem;
+  border: 1px solid rgba(255, 223, 99, 0.14);
+  box-shadow: 0 24px 60px rgba(18, 3, 9, 0.28);
+  backdrop-filter: blur(14px);
+  background:
+    linear-gradient(180deg, rgba(106, 22, 70, 0.74) 0%, rgba(39, 10, 23, 0.92) 100%),
+    radial-gradient(circle at top left, rgba(255, 223, 99, 0.06), transparent 36%);
+}
+
+.gamedashboard-performance__header {
+  justify-content: space-between;
+  padding: 0.4rem 0.2rem 0.6rem;
+}
+
+.gamedashboard-performance__header h3 {
+  font-size: 1.45rem;
+}
+
+.gamedashboard-performance__header p {
+  max-width: 22rem;
+  text-align: right;
+}
+
+.gamedashboard-infoList,
+.gamedashboard-activityList {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.gamedashboard-infoRow,
+.gamedashboard-activityRow,
+.gamedashboard-gamecard__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+}
+
+.gamedashboard-infoRow {
+  justify-content: flex-start;
+}
+
+.gamedashboard-infoRow strong {
+  margin-top: 0.3rem;
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.gamedashboard-activityRow strong {
+  font-size: 1rem;
+  text-align: right;
+}
+
+.gamedashboard-scorecard__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.95rem;
+  margin-top: 1rem;
+}
+
+.gamedashboard-scorecard__grid strong {
+  margin-top: 0.45rem;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.gamedashboard-gamecard {
+  background:
+    linear-gradient(180deg, rgba(87, 20, 58, 0.54) 0%, rgba(25, 7, 14, 0.94) 100%),
+    radial-gradient(circle at top right, rgba(255, 223, 99, 0.06), transparent 38%);
+}
+
+.gamedashboard-gamecard--rush {
+  border-color: rgba(255, 223, 99, 0.18);
+}
+
+.gamedashboard-gamecard--run {
+  border-color: rgba(207, 125, 59, 0.18);
+}
+
+.gamedashboard-gamecard__header {
+  margin-bottom: 1rem;
+}
+
+.gamedashboard-gamecard__last {
+  color: var(--game-muted);
+  font-size: 0.82rem;
+  text-align: right;
+  word-break: break-word;
+}
+
+.gamedashboard-status {
+  border-radius: 1.6rem;
+  padding: 1.4rem 1.5rem;
+  color: var(--game-text);
+}
+
+.gamedashboard-status--error {
+  color: #ffd6d6;
+  border-color: rgba(255, 120, 120, 0.22);
+  background: linear-gradient(180deg, rgba(120, 16, 24, 0.45) 0%, rgba(39, 10, 23, 0.9) 100%);
+}
+
+@media (max-width: 1120px) {
+  .gamedashboard-rewardmodal__hero,
+  .gamedashboard-spotlight,
+  .gamedashboard-board,
+  .gamedashboard-featured__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .gamedashboard-rewardmodal__track,
+  .gamedashboard-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gamedashboard-performance__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .gamedashboard-performance__header p {
+    max-width: none;
+    text-align: left;
+  }
+}
+
+@media (max-width: 720px) {
+  .gamedashboard-shell {
+    padding: 8rem 1rem 2.5rem;
+  }
+
+  .gamedashboard-rewardmodal__backdrop {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .gamedashboard-rewardmodal {
+    padding: 1rem;
+    border-radius: 1.4rem;
+  }
+
+  .gamedashboard-rewardmodal__copy,
+  .gamedashboard-rewardmodal__visual,
+  .gamedashboard-rewardcard {
+    border-radius: 1.2rem;
+  }
+
+  .gamedashboard-rewardmodal__stats,
+  .gamedashboard-rewardmodal__track,
+  .gamedashboard-stats,
+  .gamedashboard-games,
+  .gamedashboard-scorecard__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gamedashboard-hero,
+  .gamedashboard-spotlight,
+  .gamedashboard-statcard,
+  .gamedashboard-panel,
+  .gamedashboard-gamecard,
+  .gamedashboard-performance {
+    border-radius: 1.4rem;
+  }
+
+  .gamedashboard-spotlight__mission h3 {
+    font-size: clamp(2.2rem, 12vw, 2.9rem);
+  }
+
+  .gamedashboard-gamecard__header,
+  .gamedashboard-activityRow,
+  .gamedashboard-infoRow,
+  .gamedashboard-statcard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .gamedashboard-gamecard__last,
+  .gamedashboard-activityRow strong {
+    text-align: left;
+  }
+
+  .gamedashboard-featured {
+    padding: 1rem;
+  }
+
+  .gamedashboard-statcard strong,
+  .gamedashboard-scorecard__grid strong {
+    font-size: 1.45rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .gamedashboard-shell {
+    padding: 7.5rem 0.75rem 2rem;
+  }
+
+  .gamedashboard-rewardmodal {
+    padding: 0.85rem;
+  }
+
+  .gamedashboard-rewardmodal__copy,
+  .gamedashboard-rewardmodal__visual {
+    padding: 1.1rem;
+  }
+
+  .gamedashboard-hero,
+  .gamedashboard-spotlight,
+  .gamedashboard-statcard,
+  .gamedashboard-panel,
+  .gamedashboard-gamecard,
+  .gamedashboard-performance {
+    border-radius: 1.15rem;
+  }
+
+  .gamedashboard-hero h1 {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+  }
+
+  .gamedashboard-statcard strong {
+    font-size: 1.25rem;
+  }
+
+  .gamedashboard-scorecard__grid strong {
+    font-size: 1.25rem;
+  }
+
+  .gamedashboard-featured strong {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+  }
+
+  .gamedashboard-spotlight__mission h3 {
+    font-size: clamp(1.8rem, 10vw, 2.4rem);
+  }
+}

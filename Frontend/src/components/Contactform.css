@@ -1,0 +1,399 @@
+.contact-title-shell {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.contact-title {
+  margin: 0;
+}
+
+.aurora-title--contact {
+  --fs: clamp(1.85rem, 4.7vw, 2.8rem);
+  display: flex;
+  align-items: flex-start;
+  padding: 1.2rem 1.4rem 1.3rem;
+  border-color: color-mix(in oklab, var(--color-primary-content) 14%, white);
+  background:
+    linear-gradient(180deg, rgba(220, 106, 54, 0.934) 0%, rgb(195, 110, 36) 100%);
+  box-shadow:
+    0 18px 34px rgb(249, 94, 37),
+    inset 0 1px 0 rgb(202, 139, 105);
+  text-align: left;
+  line-height: 1.05;
+}
+
+.aurora-title--contact::before {
+  inset: auto -12% -36% auto;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(227, 108, 24, 0.5) 0, transparent 62%);
+  filter: blur(8px);
+}
+
+.aurora-title--contact .title-main,
+.aurora-title--contact .title-subtext {
+  z-index: 2;
+}
+
+.aurora-title--contact .title-subtext {
+  padding: 0.45rem 0.95rem;
+}
+
+.aurora-title--contact .aurora__item {
+  filter: blur(10px);
+  opacity: 0.62;
+}
+
+.aurora-title--contact .aurora__item:nth-child(1) {
+  top: 8%;
+  right: 10%;
+  width: 4.5rem;
+  height: 4.5rem;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.aurora-title--contact .aurora__item:nth-child(2) {
+  top: 35%;
+  right: -0.6rem;
+  width: 4rem;
+  height: 3rem;
+  background: color-mix(in oklab, var(--color-secondary) 42%, white);
+}
+
+.aurora-title--contact .aurora__item:nth-child(3) {
+  left: 22%;
+  bottom: -0.8rem;
+  width: 5rem;
+  height: 2.6rem;
+  background: color-mix(in oklab, var(--color-accent) 52%, white);
+}
+
+.aurora-title--contact .aurora__item:nth-child(4) {
+  left: -0.8rem;
+  top: 40%;
+  width: 3rem;
+  height: 3rem;
+  background: color-mix(in oklab, var(--color-primary) 56%, white);
+}
+
+.contact-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  box-sizing: border-box;
+}
+
+.contact-card {
+  width: min(880px, 100%);
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  border-radius: calc(var(--radius-box) + 0.25rem);
+  box-shadow: 0 22px 44px var(--shadow-color);
+}
+
+.contact-card__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 56px 40px;
+  background:
+    linear-gradient(
+      180deg,
+      oklch(46.44% 0.111 37.85) 0%,
+      oklch(55% 0.195 38.402) 55%,
+      oklch(95% 0.038 75.164) 100%
+    );
+  color: oklch(98% 0.016 73.684);
+  text-align: left;
+}
+
+.contact-card__lead,
+.contact-card__info p {
+  max-width: 290px;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: color-mix(in oklab, oklch(98% 0.016 73.684) 82%, white);
+}
+
+.contact-card__lead {
+  margin-bottom: 22px;
+}
+
+.contact-card__form-shell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 36px;
+  background: color-mix(in oklab, var(--surface-strong) 92%, white);
+}
+
+.contact-card__form-shell h2 {
+  margin: 0 0 10px;
+}
+
+.contact-form-shell__title {
+  position: relative;
+  margin: 0 0 1rem;
+  color: var(--page-text);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  letter-spacing: -0.04em;
+}
+
+.contact-form-shell__title::after {
+  content: "";
+  display: block;
+  width: 4.5rem;
+  height: 0.3rem;
+  margin: 0.7rem auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.contact-form__field span {
+  align-self: flex-start;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--page-text);
+  text-align: left;
+}
+
+.contact-form__field input,
+.contact-form__field textarea {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-field);
+  background: color-mix(in oklab, var(--surface-muted) 88%, white);
+  color: var(--page-text);
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.contact-form__field input:hover,
+.contact-form__field textarea:hover {
+  border-color: color-mix(in oklab, var(--color-primary) 24%, white);
+  background: color-mix(in oklab, var(--surface-strong) 94%, white);
+}
+
+.contact-form__field input {
+  height: 42px;
+  padding: 0 14px;
+}
+
+.contact-form__field textarea {
+  min-height: 110px;
+  padding: 14px;
+  resize: vertical;
+  font: inherit;
+}
+
+.contact-form__field input::placeholder,
+.contact-form__field textarea::placeholder {
+  color: var(--placeholder-text, var(--muted-text));
+}
+
+.contact-form__field input:focus,
+.contact-form__field textarea:focus {
+  outline: 3px solid color-mix(in oklab, var(--color-primary) 36%, white);
+  outline-offset: 1px;
+  border-color: color-mix(in oklab, var(--color-primary) 48%, white);
+}
+
+.contact-form__status {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+}
+
+.contact-form__status--error {
+  color: var(--color-error);
+}
+
+.contact-form__status--success {
+  color: var(--color-success);
+}
+
+.contact-form__submit {
+  align-self: center;
+  min-width: 122px;
+  margin-top: 6px;
+  padding: 11px 24px;
+  border: 1px solid color-mix(in oklab, var(--action-btn, #d24a1c) 70%, var(--color-base-content));
+  border-radius: 999px;
+  background: var(--action-btn, #d24a1c);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 14px 28px color-mix(in oklab, var(--action-btn, #d24a1c) 22%, transparent);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.contact-form__submit:hover:not(:disabled) {
+  background: var(--action-btn-hover, color-mix(in oklab, var(--action-btn, #d24a1c) 88%, white));
+  border-color: color-mix(in oklab, var(--action-btn, #d24a1c) 60%, white);
+  box-shadow: 0 18px 30px color-mix(in oklab, var(--action-btn, #d24a1c) 20%, transparent);
+  transform: translateY(-1px);
+}
+
+.contact-form__submit:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--action-btn, #d24a1c) 36%, white);
+  outline-offset: 2px;
+}
+
+.contact-form__submit:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 10px 18px color-mix(in oklab, var(--action-btn, #d24a1c) 16%, transparent);
+}
+
+.contact-form__submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 800px) {
+  .contact-page {
+    padding: 20px 12px;
+    min-height: auto;
+  }
+
+  .contact-card {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    width: 100%;
+    max-width: 540px;
+  }
+
+  .contact-card__info {
+    padding: 32px 24px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .contact-card__lead,
+  .contact-card__info p {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .contact-card__form-shell {
+    padding: 32px 24px;
+  }
+
+  .aurora-title--contact {
+    align-items: center;
+    text-align: center;
+    padding: 1.05rem 1rem 1.15rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-page {
+    padding: 16px 10px;
+  }
+
+  .contact-card {
+    border-radius: var(--radius-box);
+    max-width: 100%;
+  }
+
+  .contact-card__info {
+    padding: 28px 18px;
+  }
+
+  .contact-card__form-shell {
+    padding: 28px 18px;
+  }
+
+  .contact-form {
+    gap: 10px;
+  }
+
+  .contact-form__field input {
+    height: 40px;
+    padding: 0 12px;
+  }
+
+  .contact-form__field textarea {
+    min-height: 90px;
+    padding: 12px;
+  }
+
+  .contact-form__submit {
+    width: 100%;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .contact-page {
+    padding: 10px 6px;
+  }
+
+  .contact-card__info {
+    padding: 22px 14px;
+  }
+
+  .contact-card__form-shell {
+    padding: 22px 14px;
+  }
+
+  .contact-form-shell__title {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+  }
+
+  .contact-form__field span {
+    font-size: 0.88rem;
+  }
+
+  .contact-form__field input {
+    height: 38px;
+    font-size: 0.9rem;
+  }
+
+  .contact-form__field textarea {
+    min-height: 80px;
+    font-size: 0.9rem;
+  }
+
+  .contact-form__submit {
+    font-size: 0.85rem;
+    padding: 11px 18px;
+  }
+
+  .aurora-title--contact {
+    --fs: clamp(1.4rem, 6vw, 2rem);
+    padding: 0.9rem 0.8rem 1rem;
+  }
+}

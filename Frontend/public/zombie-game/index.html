@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="shortcut icon" href="img/zombie.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Zombie Rush</title>
+</head>
+<body>
+  <div class="game-shell">
+    <div class="ambient ambient--one" aria-hidden="true"></div>
+    <div class="ambient ambient--two" aria-hidden="true"></div>
+
+    <header class="hud">
+      <div class="hud-panel hud-brand">
+        <p class="eyebrow">Mini Game</p>
+        <h1>Zombie Rush</h1>
+        <p class="subcopy">Hold the arena, chain kills to build score, dash through pressure, and collect drops before the horde closes in.</p>
+      </div>
+
+      <div class="hud-panel hud-stats">
+        <div class="stat">
+          <span class="stat-label">Score</span>
+          <span class="stat-value score-num">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Health</span>
+          <span class="stat-value health-num">100</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Wave</span>
+          <span class="stat-value wave-num">1</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Combo</span>
+          <span class="stat-value combo-num">1x</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Boost</span>
+          <span class="stat-value boost-num">None</span>
+        </div>
+      </div>
+
+      <div class="hud-panel hud-controls">
+        <p class="controls-line">`WASD` Move</p>
+        <p class="controls-line">Click Shoot</p>
+        <p class="controls-line">`Shift` Dash</p>
+        <p class="controls-line">Green core = Heal</p>
+        <p class="controls-line">Orange core = Fury</p>
+        <button class="audio-toggle" type="button" aria-label="Toggle sound">
+          <img class="sound-icon sound-btn" src="img/sound.png" alt="Sound on">
+          <img class="sound-icon muted-btn" src="img/muted.png" alt="Sound muted">
+        </button>
+      </div>
+    </header>
+
+    <div class="status-bar">
+      <span class="status-text">Arena offline</span>
+      <span class="dash-status">Dash Ready</span>
+      <span class="best-score">Best 0</span>
+    </div>
+
+    <div class="auth-lock" hidden>
+      <div class="auth-lock-card">
+        <p class="auth-lock-kicker">Sign In Required</p>
+        <h2>Zombie Rush is locked.</h2>
+        <p>Sign in from the game app first, then launch this game again.</p>
+      </div>
+    </div>
+
+    <div class="result">
+      <div class="content">
+        <p class="eyebrow result-mode">Undead Protocol</p>
+        <h2 class="score-num">0</h2>
+        <p class="result-label">Points</p>
+        <p class="result-summary">Build a combo chain, fight for pickups, and survive the arena long enough to crack a new record.</p>
+        <div class="btn">
+          <button class="start-game-btn" type="button">Start Hunt</button>
+        </div>
+      </div>
+    </div>
+
+    <canvas class="canvas"></canvas>
+  </div>
+
+  <script defer src="script.js"></script>
+</body>
+</html>

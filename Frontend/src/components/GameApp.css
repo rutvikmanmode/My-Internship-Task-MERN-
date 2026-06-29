@@ -1,0 +1,503 @@
+/* GameApp scoped styles - reset inherited base styles (buttons, etc.) */
+@font-face {
+  font-family: 'EternalUI';
+  src: url('../assets/font 2/EternalUiBold-Rpj0A.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.game-app-root {
+  font-family: 'EternalUI', 'Rajdhani', sans-serif;
+  --game-bg: #3d1426;
+  --game-surface: #6a1646;
+  --game-surface-strong: #ae0021;
+  --game-secondary: #cf7d3b;
+  --game-accent: #ffdf63;
+  --game-text: #fff4dc;
+  --game-muted: #e6c8ab;
+  --game-subtle: #b78c79;
+  --game-panel: rgba(61, 20, 38, 0.78);
+  --game-panel-soft: rgba(106, 22, 70, 0.24);
+  --game-panel-strong: rgba(61, 20, 38, 0.9);
+  --game-border: rgba(255, 223, 99, 0.24);
+  --game-button-radius: 1.2rem;
+  --game-button-radius-pill: 999px;
+  --game-font-body: 'EternalUI', 'Rajdhani', sans-serif;
+  --game-font-display: 'EternalUI', 'Rajdhani', sans-serif;
+  --game-body-letter-spacing: 0.045em;
+  --game-display-letter-spacing: 0.05em;
+}
+
+/* Reset global button styles inside the game app so Tailwind classes take precedence */
+.game-app-root button {
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.game-app-root button:hover {
+  border-color: transparent;
+}
+
+.game-app-root button:focus,
+.game-app-root button:focus-visible {
+  outline: none;
+}
+
+.game-app-root button:not(.game-signin-button),
+.game-app-root [data-slot="button"] {
+  border-radius: var(--game-button-radius);
+}
+
+.game-app-root button[class*="rounded-full"]:not(.game-signin-button),
+.game-app-root button[class*="rounded-[999"]:not(.game-signin-button) {
+  border-radius: var(--game-button-radius-pill);
+}
+
+.game-app-root button[class*="rounded-xl"]:not(.game-signin-button),
+.game-app-root button[class*="rounded-2xl"]:not(.game-signin-button),
+.game-app-root button[class*="rounded-[1."]:not(.game-signin-button) {
+  border-radius: calc(var(--game-button-radius) + 0.15rem);
+}
+
+/* Reset global anchor styles */
+.game-app-root a {
+  font-weight: inherit;
+  color: inherit;
+  text-decoration: none;
+}
+
+.game-app-root a:hover {
+  color: inherit;
+}
+
+/* Reset heading styles */
+.game-app-root h1,
+.game-app-root h2,
+.game-app-root h3,
+.game-app-root h4 {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Reset input styles */
+.game-app-root input,
+.game-app-root input::placeholder,
+.game-app-root textarea,
+.game-app-root textarea::placeholder {
+  font-family: var(--game-font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+
+.game-app-root input {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+}
+
+.game-app-root textarea {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+}
+
+.game-form-text {
+  font-family: var(--game-font-body) !important;
+  letter-spacing: 0.02em !important;
+}
+
+.game-app-root,
+.game-app-root p,
+.game-app-root span,
+.game-app-root a,
+.game-app-root button,
+.game-app-root label,
+.game-app-root textarea,
+.game-app-root li {
+  font-family: var(--game-font-body);
+  letter-spacing: var(--game-body-letter-spacing);
+  line-height: 1.5;
+}
+
+.game-app-root h1,
+.game-app-root h2,
+.game-app-root h3,
+.game-app-root h4,
+.game-app-root h5,
+.game-app-root h6,
+.game-app-root .game-display-text,
+.game-app-root .game-signin-button {
+  font-family: var(--game-font-display);
+  letter-spacing: var(--game-display-letter-spacing);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.game-signin-button-wrap {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease;
+}
+
+.game-signin-button {
+  position: relative;
+  min-width: 132px;
+  min-height: 52px;
+  padding: 0.9rem 1.15rem;
+  border: 1px solid rgba(255, 223, 99, 0.24);
+  border-radius: 999px;
+  cursor: pointer;
+  background: #fff7ef;
+  color: var(--game-bg);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transform-style: preserve-3d;
+  transition: all 0.15s ease;
+  font-family: var(--game-font-display);
+  font-size: 0.94rem;
+  font-weight: 900;
+  line-height: 1;
+  text-shadow:
+    -1px -1px 0 rgba(61, 20, 38, 0.18),
+    1px -1px 0 rgba(61, 20, 38, 0.18),
+    -1px 1px 0 rgba(61, 20, 38, 0.18),
+    1px 1px 0 rgba(61, 20, 38, 0.18);
+  box-shadow:
+    0 0 20px rgba(255, 247, 239, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-signin-button .glitch-text {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+}
+
+.game-signin-button .glitch-layers {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.game-signin-button .glitch-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  opacity: 0;
+  transition: all 0.15s ease;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  background: #fff7ef;
+}
+
+.game-signin-button .layer-1 {
+  color: #fff0c8;
+  text-shadow: 0 0 8px rgba(255, 223, 99, 0.4);
+}
+
+.game-signin-button .layer-2 {
+  color: #ffd0a6;
+  text-shadow: 0 0 8px rgba(174, 0, 33, 0.35);
+}
+
+.game-signin-button-wrap:hover .layer-1 {
+  opacity: 1;
+  animation: gameGlitchLayer1 0.4s steps(2) infinite;
+}
+
+.game-signin-button-wrap:hover .layer-2 {
+  opacity: 1;
+  animation: gameGlitchLayer2 0.4s steps(2) infinite;
+}
+
+.game-signin-button-wrap:hover .game-signin-button {
+  animation: gameButtonGlitch 0.3s steps(2) infinite;
+  box-shadow:
+    0 0 18px rgba(255, 223, 99, 0.35),
+    0 0 26px rgba(207, 125, 59, 0.28),
+    0 0 40px rgba(174, 0, 33, 0.24);
+}
+
+.game-signin-button .noise {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: repeating-radial-gradient(circle at 50% 50%,
+      transparent 0,
+      rgba(61, 20, 38, 0.12) 1px,
+      transparent 2px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  animation: gameNoise 0.2s steps(2) infinite;
+}
+
+.game-signin-button-wrap:hover .noise {
+  opacity: 1;
+}
+
+.game-signin-button .glitch-slice {
+  position: absolute;
+  left: -10%;
+  width: 120%;
+  height: 4px;
+  background: rgba(255, 247, 220, 0.9);
+  opacity: 0;
+  animation: gameSlice 3s linear infinite;
+}
+
+@keyframes gameButtonGlitch {
+  0% {
+    transform: translate(0) scale(1.02);
+  }
+
+  25% {
+    transform: translate(-4px, 2px) scale(1.04) skew(-3deg);
+  }
+
+  50% {
+    transform: translate(4px, -2px) scale(1.02) skew(3deg);
+  }
+
+  75% {
+    transform: translate(-6px, -2px) scale(1.01) skew(-2deg);
+  }
+
+  100% {
+    transform: translate(0) scale(1.02);
+  }
+}
+
+@keyframes gameGlitchLayer1 {
+  0% {
+    transform: translate(-8px, -4px) scale(1.03) skew(-6deg);
+    clip-path: polygon(0 18%, 100% 18%, 100% 50%, 0 50%);
+  }
+
+  25% {
+    transform: translate(8px, 4px) scale(1.06) skew(6deg);
+    clip-path: polygon(0 30%, 100% 30%, 100% 62%, 0 62%);
+  }
+
+  50% {
+    transform: translate(-5px, 2px) scale(0.98) skew(-3deg);
+    clip-path: polygon(0 10%, 100% 10%, 100% 40%, 0 40%);
+  }
+
+  75% {
+    transform: translate(6px, -3px) scale(1.08) skew(4deg);
+    clip-path: polygon(0 42%, 100% 42%, 100% 72%, 0 72%);
+  }
+
+  100% {
+    transform: translate(-8px, -4px) scale(1.03) skew(-6deg);
+    clip-path: polygon(0 18%, 100% 18%, 100% 50%, 0 50%);
+  }
+}
+
+@keyframes gameGlitchLayer2 {
+  0% {
+    transform: translate(8px, 4px) scale(1.03) skew(6deg);
+    clip-path: polygon(0 52%, 100% 52%, 100% 82%, 0 82%);
+  }
+
+  25% {
+    transform: translate(-8px, -4px) scale(1.06) skew(-6deg);
+    clip-path: polygon(0 60%, 100% 60%, 100% 92%, 0 92%);
+  }
+
+  50% {
+    transform: translate(6px, -2px) scale(0.98) skew(3deg);
+    clip-path: polygon(0 40%, 100% 40%, 100% 70%, 0 70%);
+  }
+
+  75% {
+    transform: translate(-6px, 3px) scale(1.08) skew(-4deg);
+    clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
+  }
+
+  100% {
+    transform: translate(8px, 4px) scale(1.03) skew(6deg);
+    clip-path: polygon(0 52%, 100% 52%, 100% 82%, 0 82%);
+  }
+}
+
+@keyframes gameNoise {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(6%, -4%);
+  }
+
+  40% {
+    transform: translate(-4%, 8%);
+  }
+
+  60% {
+    transform: translate(8%, 4%);
+  }
+
+  80% {
+    transform: translate(-6%, -3%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes gameSlice {
+  0% {
+    top: -10%;
+    opacity: 0;
+  }
+
+  1% {
+    opacity: 0.45;
+  }
+
+  3% {
+    opacity: 0;
+  }
+
+  50% {
+    top: 110%;
+  }
+
+  100% {
+    top: 110%;
+  }
+}
+
+.game-profile-trigger {
+  position: relative;
+  display: inline-flex;
+  height: 56px;
+  width: 56px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 223, 99, 0.28);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 223, 99, 0.34), transparent 35%),
+    linear-gradient(180deg, rgba(106, 22, 70, 0.98) 0%, rgba(61, 20, 38, 0.98) 100%);
+  box-shadow:
+    0 0 20px rgba(255, 223, 99, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.game-profile-trigger__image,
+.game-profile-photo__image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.game-profile-trigger__fallback,
+.game-profile-photo__fallback {
+  color: var(--game-text);
+  font-family: var(--game-font-display);
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.game-profile-photo {
+  position: relative;
+  height: 152px;
+  width: 152px;
+  overflow: hidden;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 223, 99, 0.28);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 223, 99, 0.34), transparent 35%),
+    linear-gradient(180deg, rgba(106, 22, 70, 0.98) 0%, rgba(61, 20, 38, 0.98) 100%);
+  box-shadow:
+    0 0 30px rgba(255, 223, 99, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.game-profile-photo__upload {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  display: inline-flex;
+  transform: translateX(-50%);
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 223, 99, 0.28);
+  background: rgba(39, 10, 23, 0.86);
+  color: var(--game-accent);
+  padding: 0.5rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .game-app-root {
+    --game-body-letter-spacing: 0.03em;
+    --game-display-letter-spacing: 0.04em;
+  }
+
+  .game-signin-button {
+    min-width: 116px;
+    min-height: 46px;
+    padding: 0.8rem 1rem;
+    font-size: 0.82rem;
+  }
+
+  .game-profile-trigger {
+    height: 48px;
+    width: 48px;
+  }
+
+  .game-profile-trigger__fallback,
+  .game-profile-photo__fallback {
+    font-size: 1.05rem;
+  }
+
+  .game-profile-photo {
+    height: 128px;
+    width: 128px;
+  }
+
+  .game-profile-photo__upload {
+    bottom: 8px;
+    padding: 0.42rem 0.75rem;
+    font-size: 0.68rem;
+  }
+}
