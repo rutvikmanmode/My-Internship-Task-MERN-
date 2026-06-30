@@ -44,6 +44,14 @@ function getGameApiBaseUrl() {
   return fallbackValue;
 }
 
+function getAuthHeaders(extra) {
+  var token = "";
+  try { token = localStorage.getItem("gameAuthToken") || ""; } catch (e) { token = ""; }
+  var headers = Object.assign({}, extra || {});
+  if (token) { headers["Authorization"] = "Bearer " + token; }
+  return headers;
+}
+
 async function submitZombieRushScore(score) {
   const normalizedScore = Math.max(0, Math.floor(Number(score) || 0));
 
@@ -54,9 +62,9 @@ async function submitZombieRushScore(score) {
   const response = await fetch(`${getGameApiBaseUrl()}/api/game/tasks/submit-game-score`, {
     method: "POST",
     credentials: "include",
-    headers: {
+    headers: getAuthHeaders({
       "Content-Type": "application/json",
-    },
+    }),
     body: JSON.stringify({
       game: "zombie-rush",
       score: normalizedScore,
@@ -76,6 +84,7 @@ async function requireGameSignIn() {
   try {
     const response = await fetch(`${getGameApiBaseUrl()}/api/game/auth/me`, {
       credentials: "include",
+      headers: getAuthHeaders(),
     });
 
     const data = await response.json().catch(() => ({}));
