@@ -14,6 +14,13 @@ function buildGameApiUrl(path) {
   return `${GAME_API_BASE_URL}${path}`;
 }
 
+function getAuthHeaders(extra = {}) {
+  const token = (() => { try { return localStorage.getItem("gameAuthToken") || ""; } catch { return ""; } })();
+  const headers = { ...extra };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+  return headers;
+}
+
 function getRankColor(rank) {
   if (rank === 1) return "from-[var(--game-accent)] to-[var(--game-secondary)]";
   if (rank === 2) return "from-[var(--game-secondary)] to-[var(--game-surface)]";
@@ -50,6 +57,7 @@ export function LeaderboardHub() {
       try {
         const response = await fetch(buildGameApiUrl("/api/game/tasks/leaderboard"), {
           credentials: "include",
+          headers: getAuthHeaders(),
         });
         const data = await response.json().catch(() => ({}));
 

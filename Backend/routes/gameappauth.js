@@ -1,5 +1,6 @@
 const express = require("express");
 const cloudinary = require("cloudinary").v2;
+const jwt = require("jsonwebtoken");
 
 const GameAboutUser = require("../models/gamemodels/gameaboutuser");
 const GameCoinHistory = require("../models/gamemodels/gamecoinhistory");
@@ -11,6 +12,37 @@ const router = express.Router();
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const FIREBASE_AUTH_BASE_URL = "https://identitytoolkit.googleapis.com/v1";
 const SESSION_KEY = "gameUserId";
+const JWT_EXPIRES_IN = "7d";
+
+function getJwtSecret() {
+    return process.env.JWT_SECRET || "fallback-jwt-secret";
+}
+
+function signGameToken(userId) {
+    return jwt.sign({ gameUserId: String(userId) }, getJwtSecret(), { expiresIn: JWT_EXPIRES_IN });
+}
+
+function extractGameUserId(req) {
+    // Try session first.
+    if (req.session && req.session[SESSION_KEY]) {
+        return String(req.session[SESSION_KEY]);
+    }
+
+    // Fall back to JWT from Authorization header.
+    const authHeader = req.headers.authorization || "";
+    const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7).trim() : "";
+
+    if (!token) {
+        return null;
+    }
+
+    try {
+        const decoded = jwt.verify(token, getJwtSecret());
+        return decoded.gameUserId || null;
+    } catch {
+        return null;
+    }
+}
 
 function getFirebaseApiKey() {
     return (
@@ -395,10 +427,12 @@ router.post("/signup", async (req, res) => {
         }, displayName);
 
         req.session[SESSION_KEY] = String(user._id);
+        const token = signGameToken(user._id);
 
         return res.status(201).json({
             success: true,
             message: "Account created successfully",
+            token,
             user: await buildFullProfilePayload(user)
         });
     } catch (error) {
@@ -427,10 +461,12 @@ router.post("/signin", async (req, res) => {
 
         const user = await persistGameUser(signInData);
         req.session[SESSION_KEY] = String(user._id);
+        const token = signGameToken(user._id);
 
         return res.json({
             success: true,
             message: "Signed in successfully",
+            token,
             user: await buildFullProfilePayload(user)
         });
     } catch (error) {
@@ -472,10 +508,12 @@ router.post("/google", async (req, res) => {
         }, firebaseUser.displayName || "");
 
         req.session[SESSION_KEY] = String(user._id);
+        const token = signGameToken(user._id);
 
         return res.json({
             success: true,
             message: "Signed in with Google successfully",
+            token,
             user: await buildFullProfilePayload(user)
         });
     } catch (error) {
@@ -489,7 +527,7 @@ router.post("/google", async (req, res) => {
 
 router.get("/me", async (req, res) => {
     try {
-        const gameUserId = req.session[SESSION_KEY];
+        const gameUserId = extractGameUserId(req);
 
         if (!gameUserId) {
             return res.status(401).json({ success: false, message: "Not authenticated" });
@@ -520,7 +558,7 @@ router.get("/me", async (req, res) => {
 
 router.get("/profile", async (req, res) => {
     try {
-        const gameUserId = req.session[SESSION_KEY];
+        const gameUserId = extractGameUserId(req);
 
         if (!gameUserId) {
             return res.status(401).json({ success: false, message: "Not authenticated" });
@@ -551,7 +589,7 @@ router.get("/profile", async (req, res) => {
 
 router.put("/profile", async (req, res) => {
     try {
-        const gameUserId = req.session[SESSION_KEY];
+        const gameUserId = extractGameUserId(req);
 
         if (!gameUserId) {
             return res.status(401).json({ success: false, message: "Not authenticated" });
@@ -593,7 +631,7 @@ router.put("/profile", async (req, res) => {
 
 router.put("/profile-photo", async (req, res) => {
     try {
-        const gameUserId = req.session[SESSION_KEY];
+        const gameUserId = extractGameUserId(req);
 
         if (!gameUserId) {
             return res.status(401).json({ success: false, message: "Not authenticated" });

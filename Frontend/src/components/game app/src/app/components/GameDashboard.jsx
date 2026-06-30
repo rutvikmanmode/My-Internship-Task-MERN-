@@ -31,14 +31,21 @@ function buildGameApiUrl(path) {
   return `${GAME_API_BASE_URL}${path}`;
 }
 
+function getAuthHeaders(extra = {}) {
+  const token = (() => { try { return localStorage.getItem("gameAuthToken") || ""; } catch { return ""; } })();
+  const headers = { ...extra };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+  return headers;
+}
+
 async function gameRequest(path, options = {}) {
   const response = await fetch(buildGameApiUrl(path), {
     credentials: "include",
     ...options,
-    headers: {
+    headers: getAuthHeaders({
       "Content-Type": "application/json",
       ...(options.headers || {}),
-    },
+    }),
   });
 
   const data = await response.json().catch(() => ({}));
@@ -183,6 +190,7 @@ export function GameDashboard() {
       try {
         const response = await fetch(buildGameAuthUrl("/api/game/auth/profile"), {
           credentials: "include",
+          headers: getAuthHeaders(),
         });
         const data = await response.json().catch(() => ({}));
 

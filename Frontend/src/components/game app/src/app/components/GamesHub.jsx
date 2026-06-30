@@ -24,6 +24,13 @@ function buildGameAuthUrl(path) {
   return `${GAME_API_BASE_URL}${path}`;
 }
 
+function getAuthHeaders(extra = {}) {
+  const token = (() => { try { return localStorage.getItem("gameAuthToken") || ""; } catch { return ""; } })();
+  const headers = { ...extra };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+  return headers;
+}
+
 const games = [
   {
     title: "Zombie Rush",
@@ -67,6 +74,7 @@ export function GamesHub() {
       try {
         const response = await fetch(buildGameAuthUrl("/api/game/auth/profile"), {
           credentials: "include",
+          headers: getAuthHeaders(),
         });
         const data = await response.json().catch(() => ({}));
 

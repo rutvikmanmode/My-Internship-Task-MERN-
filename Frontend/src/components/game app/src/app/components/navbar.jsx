@@ -28,6 +28,39 @@ function buildGameAuthUrl(path) {
   return `${GAME_API_BASE_URL.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
 }
 
+const GAME_TOKEN_KEY = "gameAuthToken";
+
+function getGameToken() {
+  try {
+    return localStorage.getItem(GAME_TOKEN_KEY) || "";
+  } catch {
+    return "";
+  }
+}
+
+function setGameToken(token) {
+  try {
+    if (token) {
+      localStorage.setItem(GAME_TOKEN_KEY, token);
+    } else {
+      localStorage.removeItem(GAME_TOKEN_KEY);
+    }
+  } catch {
+    // localStorage may be unavailable.
+  }
+}
+
+function getAuthHeaders(extra = {}) {
+  const token = getGameToken();
+  const headers = { ...extra };
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  return headers;
+}
+
 function hasFirebaseClientConfig() {
   return Boolean(
     FIREBASE_CONFIG.apiKey &&
@@ -199,6 +232,7 @@ export function Navbar({ activeItem = "home", onNavChange }) {
       try {
         const response = await fetch(buildGameAuthUrl("/api/game/auth/profile"), {
           credentials: "include",
+          headers: getAuthHeaders(),
         });
         const data = await response.json().catch(() => ({}));
 
@@ -280,9 +314,9 @@ export function Navbar({ activeItem = "home", onNavChange }) {
       const response = await fetch(buildGameAuthUrl(endpoint), {
         method: "POST",
         credentials: "include",
-        headers: {
+        headers: getAuthHeaders({
           "Content-Type": "application/json",
-        },
+        }),
         body: JSON.stringify(payload),
       });
 
@@ -290,6 +324,10 @@ export function Navbar({ activeItem = "home", onNavChange }) {
 
       if (!response.ok || !data?.success) {
         throw new Error(data?.message || "Authentication failed");
+      }
+
+      if (data.token) {
+        setGameToken(data.token);
       }
 
       syncProfileState(data.user);
@@ -325,9 +363,9 @@ export function Navbar({ activeItem = "home", onNavChange }) {
       const response = await fetch(buildGameAuthUrl("/api/game/auth/google"), {
         method: "POST",
         credentials: "include",
-        headers: {
+        headers: getAuthHeaders({
           "Content-Type": "application/json",
-        },
+        }),
         body: JSON.stringify({ idToken }),
       });
 
@@ -335,6 +373,10 @@ export function Navbar({ activeItem = "home", onNavChange }) {
 
       if (!response.ok || !data?.success) {
         throw new Error(data?.message || `Google sign-in failed on backend (${response.status})`);
+      }
+
+      if (data.token) {
+        setGameToken(data.token);
       }
 
       syncProfileState(data.user);
@@ -356,6 +398,7 @@ export function Navbar({ activeItem = "home", onNavChange }) {
       await fetch(buildGameAuthUrl("/api/game/auth/logout"), {
         method: "POST",
         credentials: "include",
+        headers: getAuthHeaders(),
       });
     } catch {
       // Keep UI responsive even if the request fails.
@@ -371,6 +414,7 @@ export function Navbar({ activeItem = "home", onNavChange }) {
     }
 
     setAuthUser(null);
+    setGameToken("");
     setProfileForm({
       displayName: "",
       about: "",
@@ -403,9 +447,9 @@ export function Navbar({ activeItem = "home", onNavChange }) {
       const response = await fetch(buildGameAuthUrl("/api/game/auth/profile"), {
         method: "PUT",
         credentials: "include",
-        headers: {
+        headers: getAuthHeaders({
           "Content-Type": "application/json",
-        },
+        }),
         body: JSON.stringify(profileForm),
       });
       const data = await response.json().catch(() => ({}));
@@ -446,9 +490,9 @@ export function Navbar({ activeItem = "home", onNavChange }) {
       const response = await fetch(buildGameAuthUrl("/api/game/auth/profile-photo"), {
         method: "PUT",
         credentials: "include",
-        headers: {
+        headers: getAuthHeaders({
           "Content-Type": "application/json",
-        },
+        }),
         body: JSON.stringify({ imageData }),
       });
       const data = await response.json().catch(() => ({}));

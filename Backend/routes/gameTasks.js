@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 const GameAboutUser = require("../models/gamemodels/gameaboutuser");
 const GameCoinHistory = require("../models/gamemodels/gamecoinhistory");
@@ -14,6 +15,29 @@ const GameWeeklyMission = require("../models/gamemodels/gameweeklymission");
 
 const router = express.Router();
 const SESSION_KEY = "gameUserId";
+
+function extractGameUserId(req) {
+    // Try session first.
+    if (req.session && req.session[SESSION_KEY]) {
+        return String(req.session[SESSION_KEY]);
+    }
+
+    // Fall back to JWT from Authorization header.
+    const authHeader = req.headers.authorization || "";
+    const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7).trim() : "";
+
+    if (!token) {
+        return null;
+    }
+
+    try {
+        const secret = process.env.JWT_SECRET || "fallback-jwt-secret";
+        const decoded = jwt.verify(token, secret);
+        return decoded.gameUserId || null;
+    } catch {
+        return null;
+    }
+}
 const DEFAULT_DAILY_LOGIN_REWARDS = DEFAULT_GAME_GLOBAL_CONFIG.dailyLoginRewards;
 const DEFAULT_SPIN_WHEEL_REWARDS = DEFAULT_GAME_GLOBAL_CONFIG.spinWheelRewards;
 const DEFAULT_DAILY_SPIN_LIMIT = DEFAULT_GAME_GLOBAL_CONFIG.dailySpinLimit;
@@ -901,7 +925,7 @@ async function syncCoinBalance(user, coinHistory, missionProgress) {
 }
 
 async function getAuthenticatedGameUser(req, res) {
-    const gameUserId = req.session[SESSION_KEY];
+    const gameUserId = extractGameUserId(req);
 
     if (!gameUserId) {
         res.status(401).json({ success: false, message: "Sign in to access missions" });
@@ -1018,7 +1042,7 @@ router.get("/leaderboard", async (req, res) => {
                 rank: index + 1
             }));
         const preview = players.slice(0, 5);
-        const gameUserId = req.session[SESSION_KEY] ? String(req.session[SESSION_KEY]) : "";
+        const gameUserId = extractGameUserId(req) || "";
         const currentUser = gameUserId
             ? players.find((player) => player.userId === gameUserId) || null
             : null;
