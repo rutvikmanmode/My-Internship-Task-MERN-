@@ -11,6 +11,12 @@ const FIREBASE_CONFIG = {
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "",
   appId: import.meta.env.VITE_FIREBASE_APP_ID || "",
 };
+const FIREBASE_CONFIG_ENV_KEYS = {
+  apiKey: "VITE_FIREBASE_API_KEY",
+  authDomain: "VITE_FIREBASE_AUTH_DOMAIN",
+  projectId: "VITE_FIREBASE_PROJECT_ID",
+  appId: "VITE_FIREBASE_APP_ID",
+};
 const FIREBASE_APP_SCRIPT = "https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js";
 const FIREBASE_AUTH_SCRIPT = "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js";
 
@@ -19,7 +25,7 @@ function buildGameAuthUrl(path) {
     return path;
   }
 
-  return `${GAME_API_BASE_URL}${path}`;
+  return `${GAME_API_BASE_URL.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
 }
 
 function hasFirebaseClientConfig() {
@@ -29,6 +35,31 @@ function hasFirebaseClientConfig() {
     FIREBASE_CONFIG.projectId &&
     FIREBASE_CONFIG.appId
   );
+}
+
+function getMissingFirebaseConfigKeys() {
+  return Object.entries(FIREBASE_CONFIG)
+    .filter(([, value]) => !value)
+    .map(([key]) => FIREBASE_CONFIG_ENV_KEYS[key]);
+}
+
+function getFirebaseAuthErrorMessage(error) {
+  switch (error?.code) {
+    case "auth/unauthorized-domain":
+      return "This domain is not authorized in Firebase. Add localhost to Firebase Auth authorized domains.";
+    case "auth/operation-not-allowed":
+      return "Google sign-in is not enabled in Firebase Authentication.";
+    case "auth/popup-blocked":
+      return "The Google sign-in popup was blocked by the browser.";
+    case "auth/popup-closed-by-user":
+      return "Google sign-in was closed before it finished.";
+    case "auth/cancelled-popup-request":
+      return "Another Google sign-in popup is already open.";
+    case "auth/network-request-failed":
+      return "Firebase could not reach Google sign-in. Check your network connection.";
+    default:
+      return error?.message || "Google sign-in failed";
+  }
 }
 
 function loadScript(src) {
@@ -276,7 +307,8 @@ export function Navbar({ activeItem = "home", onNavChange }) {
     setAuthError("");
 
     if (!hasFirebaseClientConfig()) {
-      setAuthError("Firebase Google sign-in is missing frontend config.");
+      const missingConfigKeys = getMissingFirebaseConfigKeys();
+      setAuthError(`Missing Firebase frontend config: ${missingConfigKeys.join(", ")}.`);
       return;
     }
 
@@ -302,7 +334,7 @@ export function Navbar({ activeItem = "home", onNavChange }) {
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok || !data?.success) {
-        throw new Error(data?.message || "Google sign-in failed");
+        throw new Error(data?.message || `Google sign-in failed on backend (${response.status})`);
       }
 
       syncProfileState(data.user);
@@ -310,7 +342,8 @@ export function Navbar({ activeItem = "home", onNavChange }) {
       setIsSignInOpen(false);
       navigate("/game/dashboard");
     } catch (error) {
-      setAuthError(error.message || "Google sign-in failed");
+      console.error("Google sign-in failed:", error);
+      setAuthError(getFirebaseAuthErrorMessage(error));
     } finally {
       setGoogleLoading(false);
     }

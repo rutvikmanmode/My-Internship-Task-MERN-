@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const http = require("http");
+const dns = require("dns");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -53,6 +54,14 @@ const PORT = process.env.PORT || 5000;
 const MONGODB_URI =
     process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/contactform";
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+const DNS_SERVERS = (process.env.DNS_SERVERS || "")
+    .split(",")
+    .map((serverAddress) => serverAddress.trim())
+    .filter(Boolean);
+
+if (MONGODB_URI.startsWith("mongodb+srv://") && DNS_SERVERS.length > 0) {
+    dns.setServers(DNS_SERVERS);
+}
 
 // Socket.io setup with CORS.
 const io = new Server(server, {
@@ -74,15 +83,16 @@ app.use(cors({
 app.use(express.json({ limit: "5mb" }));
 
 // Session middleware (used by Passport for chat auth).
+const isProduction = process.env.NODE_ENV === "production" || FRONTEND_URL.startsWith("https://");
 const sessionMiddleware = session({
     secret: process.env.SESSION_SECRET || "chat-session-fallback-secret",
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: false,
+        secure: isProduction,
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
-        sameSite: "lax"
+        sameSite: isProduction ? "none" : "lax"
     }
 });
 
